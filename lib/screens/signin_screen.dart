@@ -1,3 +1,4 @@
+import 'package:coffee_store/screens/home_screen.dart';
 import 'package:coffee_store/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,10 @@ class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String _email = "";
@@ -39,10 +40,28 @@ class _SignInScreenScreenState extends State<SignInScreen> {
             Container(
               margin: const EdgeInsets.all(30),
               child: CupertinoButton.filled(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    _signInAndShowSnackBar(context, _email, _password);
+                    bool isLogged =
+                        await AuthService().signIn(_email, _password);
+                    if (!isLogged) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Credenciales inválidas')),
+                        );
+                      }
+                      return;
+                    }
+
+                    if (context.mounted) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                      );
+                    }
                   }
                 },
                 child: const Text("Ingresar"),
@@ -52,18 +71,5 @@ class _SignInScreenScreenState extends State<SignInScreen> {
         ),
       ),
     )));
-  }
-
-  void _signInAndShowSnackBar(
-      BuildContext context, String email, String password) async {
-    bool isLogged = await AuthService().signIn(email, password);
-
-    if (!isLogged) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Credenciales inválidas')),
-        );
-      }
-    }
   }
 }
