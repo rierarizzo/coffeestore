@@ -1,5 +1,5 @@
-import 'package:coffee_store/entities/address.dart';
-import 'package:coffee_store/entities/paymentcard.dart';
+import 'package:coffee_store/models/address.dart';
+import 'package:coffee_store/models/paymentcard.dart';
 
 class User {
   int? id;
