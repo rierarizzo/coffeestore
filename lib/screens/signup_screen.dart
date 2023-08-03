@@ -1,4 +1,3 @@
-import 'package:coffee_store/screens/home_screen.dart';
 import 'package:coffee_store/screens/signin_screen.dart';
 import 'package:coffee_store/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +20,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _phone = "";
   String _email = "";
   String _password = "";
-  String _role = "A";
 
   @override
   Widget build(BuildContext context) {
