@@ -54,7 +54,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                       return;
                     }
-
                     if (context.mounted) {
                       Navigator.push(
                         context,
