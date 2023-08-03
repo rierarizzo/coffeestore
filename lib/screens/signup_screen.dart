@@ -33,27 +33,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFormField(
-              decoration: const InputDecoration(labelText: "Username"),
-              keyboardType: TextInputType.username,
+              decoration: const InputDecoration(labelText: "Nombre de usuario"),
+              keyboardType: TextInputType.text,
               onSaved: (value) => _username = value!,
             ),
             TextFormField(
-              decoration: const InputDecoration(labelText: "Name"),
+              decoration: const InputDecoration(labelText: "Nombres"),
               keyboardType: TextInputType.name,
               onSaved: (value) => _name = value!,
             ),
             TextFormField(
-              decoration: const InputDecoration(labelText: "Surname"),
-              keyboardType: TextInputType.surname,
+              decoration: const InputDecoration(labelText: "Apellidos"),
+              keyboardType: TextInputType.text,
               onSaved: (value) => _surname = value!,
             ),
             TextFormField(
-              decoration: const InputDecoration(labelText: "Phone"),
+              decoration: const InputDecoration(labelText: "Número de teléfono"),
               keyboardType: TextInputType.phone,
               onSaved: (value) => _phone = value!,
             ),
             TextFormField(
-              decoration: const InputDecoration(labelText: "Email"),
+              decoration: const InputDecoration(labelText: "Correo electrónico"),
               keyboardType: TextInputType.emailAddress,
               onSaved: (value) => _email = value!,
             ),
@@ -68,13 +68,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    bool isLogged = await AuthService().signUp(
+                    bool isRegistered = await AuthService().signUp(
                         _username, _name, _surname, _phone, _email, _password);
-                    if (!isLogged) {
+                    if (!isRegistered) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text('Ingrese todos los campos')),
+                              content: Text('Ocurrió un error inesperado')),
                         );
                       }
                       return;
@@ -91,6 +91,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
                 child: const Text("Registrar"),
               ),
+            ),
+            CupertinoButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                );
+              },
+              child: const Text("¿Ya tienes una cuenta? Inicia sesión", textAlign: TextAlign.center),
             )
           ],
         ),

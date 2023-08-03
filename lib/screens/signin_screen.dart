@@ -1,4 +1,5 @@
 import 'package:coffee_store/screens/home_screen.dart';
+import 'package:coffee_store/screens/signup_screen.dart';
 import 'package:coffee_store/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFormField(
-              decoration: const InputDecoration(labelText: "Email"),
+              decoration: const InputDecoration(labelText: "Correo electrónico"),
               keyboardType: TextInputType.emailAddress,
               onSaved: (value) => _email = value!,
             ),
@@ -65,6 +66,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 },
                 child: const Text("Ingresar"),
               ),
+            ),
+            CupertinoButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                );
+              },
+              child: const Text("¿No tienes una cuenta? Regístrate"),
             )
           ],
         ),

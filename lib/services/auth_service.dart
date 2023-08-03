@@ -15,6 +15,7 @@ class AuthService {
     final response =
         await client.post(Uri.parse("$uri/auth/signin"), body: body);
 
+    // Status OK
     if (response.statusCode == 200) {
       logDebug(response.body);
       return true;
@@ -27,19 +28,22 @@ class AuthService {
   Future<bool> signUp(String username, String name, String surname,
       String phone, String email, String password) async {
     final json = {
-      "Username": username,
+      "username": username,
       "name": name,
       "surname": surname,
       "phone": phone,
+      "email": email,
       "password": password,
+      "role": "A"
     };
 
     final body = jsonEncode(json);
 
     final response =
-        await client.post(Uri.parse("$uri/auth/signin"), body: body);
+        await client.post(Uri.parse("$uri/auth/signup"), body: body);
 
-    if (response.statusCode == 200) {
+    // Status created
+    if (response.statusCode == 201) {
       logDebug(response.body);
       return true;
     } else {
