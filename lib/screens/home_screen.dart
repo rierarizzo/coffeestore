@@ -1,3 +1,5 @@
+import 'package:coffee_store/models/product.dart';
+import 'package:coffee_store/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -9,9 +11,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Product> products = [];
   int currentPageIndex = 0;
   NavigationDestinationLabelBehavior labelBehavior =
       NavigationDestinationLabelBehavior.alwaysShow;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProducts();
+  }
+
+  void fetchProducts() async {
+    List<Product> fetchedProducts = await ProductService().getProducts();
+
+    setState(() {
+      products = fetchedProducts;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: products.length,
         itemBuilder: (context, index) {
           return Container(
             margin: const EdgeInsets.fromLTRB(6.0, 3.0, 6.0, 3.0),
@@ -55,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Image.network(
-                          "https://upload.wikimedia.org/wikipedia/commons/4/45/A_small_cup_of_coffee.JPG",
+                          products[index].imageURL,
                           width: 150,
                           height: 150,
                           fit: BoxFit.cover,
@@ -66,23 +83,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'The Enchanted Nightingale',
-                                  style: TextStyle(
+                                  products[index].name,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
                                   ),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
-                              const Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 0.0, 8.0, 0.0),
                                 child: Text(
-                                  'Music by Julie Gable. Lyrics by Sidney Stein.',
-                                  style: TextStyle(fontSize: 16),
+                                  products[index].description,
+                                  style: const TextStyle(fontSize: 16),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
@@ -95,9 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
                                         const SizedBox(width: 8),
-                                        const Text(
-                                          "Precio: \$87.00",
-                                          style: TextStyle(
+                                        Text(
+                                          "Precio: \$${products[index].price}",
+                                          style: const TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.bold,
                                           ),
