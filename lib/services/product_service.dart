@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:coffee_store/models/product.dart';
 import 'package:http/http.dart';
-import 'package:loggy/loggy.dart';
 
 class ProductService {
   final client = Client();
@@ -13,17 +12,14 @@ class ProductService {
 
     // Status OK
     if (response.statusCode == 200) {
-      final List<dynamic> responseBody = json.decode(response.body);
-      List<Product> products = responseBody
+      final Map<String, dynamic> responseBody = json.decode(response.body);
+
+      List<Product> products = (responseBody["body"] as List)
           .map((productData) => Product.fromJson(productData))
           .toList();
 
-      logDebug(products[0].name);
-
       return products;
     } else {
-      logError(response.statusCode);
-
       return [];
     }
   }

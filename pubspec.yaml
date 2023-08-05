@@ -67,6 +67,7 @@ flutter:
     - assets/shopping-bag_selected.svg
     - assets/user.svg
     - assets/user_selected.svg
+    - assets/coffee_bk.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
