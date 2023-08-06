@@ -10,10 +10,10 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   List<Product> products = [];
   int currentPageIndex = 0;
   NavigationDestinationLabelBehavior labelBehavior =
@@ -25,11 +25,19 @@ class _HomeScreenState extends State<HomeScreen> {
     fetchProducts();
   }
 
+  // Obtiene los productos desde el backend
   void fetchProducts() async {
     List<Product> fetchedProducts = await ProductService().getProducts();
 
     setState(() {
       products = fetchedProducts;
+    });
+  }
+
+  // Permite actualizar la lista de productos desde otro Widget.
+  void updateProducts(List<Product> newProducts) {
+    setState(() {
+      products = newProducts;
     });
   }
 
@@ -65,7 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
           slivers: [
             SliverPersistentHeader(
               pinned: true,
-              delegate: HomeHeaderDelegate(),
+              // Se pasa función de updateProducts a Header para posteriormente
+              // pasarlo al Widget de filtro de productos.
+              delegate: HomeHeaderDelegate(
+                  updateProducts: updateProducts, products: products),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(

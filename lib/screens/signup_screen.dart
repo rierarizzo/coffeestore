@@ -48,12 +48,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onSaved: (value) => _surname = value!,
             ),
             TextFormField(
-              decoration: const InputDecoration(labelText: "Número de teléfono"),
+              decoration:
+                  const InputDecoration(labelText: "Número de teléfono"),
               keyboardType: TextInputType.phone,
               onSaved: (value) => _phone = value!,
             ),
             TextFormField(
-              decoration: const InputDecoration(labelText: "Correo electrónico"),
+              decoration:
+                  const InputDecoration(labelText: "Correo electrónico"),
               keyboardType: TextInputType.emailAddress,
               onSaved: (value) => _email = value!,
             ),
@@ -99,7 +101,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   MaterialPageRoute(builder: (context) => const SignInScreen()),
                 );
               },
-              child: const Text("¿Ya tienes una cuenta? Inicia sesión", textAlign: TextAlign.center),
+              child: const Text("¿Ya tienes una cuenta? Inicia sesión",
+                  textAlign: TextAlign.center),
             )
           ],
         ),

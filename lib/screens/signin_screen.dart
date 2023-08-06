@@ -29,7 +29,8 @@ class _SignInScreenState extends State<SignInScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFormField(
-              decoration: const InputDecoration(labelText: "Correo electrónico"),
+              decoration:
+                  const InputDecoration(labelText: "Correo electrónico"),
               keyboardType: TextInputType.emailAddress,
               onSaved: (value) => _email = value!,
             ),

@@ -1,8 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../models/product.dart';
+import '../services/product_service.dart';
+
 class SearchModalBottomSheet extends StatefulWidget {
-  const SearchModalBottomSheet({super.key});
+  // Tiene un parámetro updateProducts que va a representar la función para
+  // actualizar la lista de productos en el contexto de la pantalla principal.
+  final Function(List<Product>) updateProducts;
+  final List<Product> products;
+
+  // Se debe pasar la función en el constructor desde el home screen.
+  const SearchModalBottomSheet(
+      {super.key, required this.updateProducts, required this.products});
 
   @override
   SearchModalBottomSheetState createState() => SearchModalBottomSheetState();
@@ -10,6 +20,15 @@ class SearchModalBottomSheet extends StatefulWidget {
 
 class SearchModalBottomSheetState extends State<SearchModalBottomSheet> {
   final _formKey = GlobalKey<FormState>();
+  String filter = "";
+
+  // Obtiene los productos filtrados por categoría desde el backend
+  Future<List<Product>> fetchFilteredProducts({String? filterCategory}) async {
+    List<Product> fetchedProducts =
+        await ProductService().getProducts(categoryFilter: filterCategory);
+
+    return fetchedProducts;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +49,45 @@ class SearchModalBottomSheetState extends State<SearchModalBottomSheet> {
                     prefixIcon: Icon(Icons.search),
                     labelText: "Filtrar por nombre",
                   ),
+                  onSaved: (value) => filter = value!,
                 ),
                 Container(
                   margin: const EdgeInsets.all(30),
                   child: CupertinoButton.filled(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        List<Product> currentProducts = widget.products;
+                        currentProducts = currentProducts
+                            .where((p) => p.name
+                                .toUpperCase()
+                                .contains(filter.toUpperCase()))
+                            .toList();
+                        widget.updateProducts(currentProducts);
+
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
+                      }
+                    },
                     child: const Text("Filtrar"),
                   ),
                 ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  child: CupertinoButton.filled(
+                    onPressed: () async {
+                      List<Product> products =
+                          await fetchFilteredProducts(filterCategory: null);
+                      widget.updateProducts(products);
+
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text("Limpiar filtros"),
+                  ),
+                )
               ],
             ),
           ),
