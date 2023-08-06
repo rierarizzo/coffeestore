@@ -94,6 +94,8 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                   );
                 },
               ),
+              IconButton(
+                  icon: const Icon(Icons.shopping_cart), onPressed: () {})
             ],
             elevation: 0,
           ),

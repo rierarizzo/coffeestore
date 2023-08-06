@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:coffee_store/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants/constants.dart';
 
 class ProductCard extends StatefulWidget {
   final Product product;
@@ -11,6 +16,25 @@ class ProductCard extends StatefulWidget {
 }
 
 class ProductCardState extends State<ProductCard> {
+  static Future<List<Product>> getCart() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final cartData = prefs.getStringList(Constants.shoppingCartKey) ?? [];
+    return cartData.map((json) => Product.fromJson(jsonDecode(json))).toList();
+  }
+
+  Future<void> addToCart(Product product) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    List<Product> shoppingCart = await getCart();
+
+    shoppingCart.add(product);
+    final cartData = shoppingCart
+        .map((productInCart) => jsonEncode(productInCart.toJson()))
+        .toList();
+
+    await prefs.setStringList(Constants.shoppingCartKey, cartData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,7 +98,7 @@ class ProductCardState extends State<ProductCard> {
                                   ),
                                   IconButton(
                                     onPressed: () {
-                                      /* ... */
+                                      addToCart(widget.product);
                                     },
                                     icon: const Icon(Icons.add_shopping_cart),
                                   ),
