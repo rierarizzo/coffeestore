@@ -73,7 +73,8 @@ class HomeScreenState extends State<HomeScreen> {
               pinned: true,
               // Se pasa función de updateProducts a Header para posteriormente
               // pasarlo al Widget de filtro de productos.
-              delegate: HomeHeaderDelegate(updateProducts: updateProducts),
+              delegate: HomeHeaderDelegate(
+                  updateProducts: updateProducts, products: products),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(

@@ -8,9 +8,10 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
   // Tiene un parámetro updateProducts que va a representar la función para
   // actualizar la lista de productos en el contexto de la pantalla principal.
   late final Function(List<Product>) updateProducts;
+  List<Product> products = [];
 
   // Se debe pasar la función en el constructor desde el home screen.
-  HomeHeaderDelegate({required this.updateProducts});
+  HomeHeaderDelegate({required this.updateProducts, required this.products});
 
   @override
   Widget build(
@@ -73,7 +74,8 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                   showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
-                      return const SearchModalBottomSheet();
+                      return SearchModalBottomSheet(
+                          updateProducts: updateProducts, products: products);
                     },
                   );
                 },
