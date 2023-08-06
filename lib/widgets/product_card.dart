@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:coffee_store/models/product.dart';
+import 'package:coffee_store/models/productincart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
@@ -16,18 +18,27 @@ class ProductCard extends StatefulWidget {
 }
 
 class ProductCardState extends State<ProductCard> {
-  static Future<List<Product>> getCart() async {
+  final oCcy = NumberFormat("#,##0.00", "en_US");
+
+  int currentQuantity = 1;
+
+  static Future<List<ProductInCart>> getCart() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final cartData = prefs.getStringList(Constants.shoppingCartKey) ?? [];
-    return cartData.map((json) => Product.fromJson(jsonDecode(json))).toList();
+    return cartData
+        .map((json) => ProductInCart.fromJson(jsonDecode(json)))
+        .toList();
   }
 
-  Future<void> addToCart(Product product) async {
+  Future<void> addToCart(Product product, int quantity) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<Product> shoppingCart = await getCart();
+    ProductInCart productInCart =
+        ProductInCart(product: product, quantity: quantity);
 
-    shoppingCart.add(product);
+    List<ProductInCart> shoppingCart = await getCart();
+
+    shoppingCart.add(productInCart);
     final cartData = shoppingCart
         .map((productInCart) => jsonEncode(productInCart.toJson()))
         .toList();
@@ -81,33 +92,59 @@ class ProductCardState extends State<ProductCard> {
                           ),
                         ),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    "Precio: \$${widget.product.price}",
-                                    style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(width: 8),
+                                Text(
+                                  "Precio: \$${oCcy.format(widget.product.price)}",
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  IconButton(
-                                    onPressed: () {
-                                      addToCart(widget.product);
-                                    },
-                                    icon: const Icon(Icons.add_shopping_cart),
-                                  ),
-                                  const SizedBox(width: 8),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                                )
+                              ],
+                            )),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            currentQuantity++;
+                                          });
+                                        },
+                                        icon: const Icon(Icons.add)),
+                                    Text("$currentQuantity"),
+                                    IconButton(
+                                        onPressed: () {
+                                          if (currentQuantity > 1) {
+                                            setState(() {
+                                              currentQuantity--;
+                                            });
+                                          }
+                                        },
+                                        icon: const Icon(Icons.remove))
+                                  ],
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    addToCart(widget.product, currentQuantity);
+                                  },
+                                  icon: const Icon(Icons.add_shopping_cart),
+                                )
+                              ],
+                            )),
+                            const SizedBox(width: 8)
+                          ],
+                        ))
                       ],
                     ),
                   ),
