@@ -2,9 +2,9 @@ import 'package:coffee_store/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatefulWidget {
-  Product product;
+  final Product product;
 
-  ProductCard({super.key, required this.product});
+  const ProductCard({super.key, required this.product});
 
   @override
   ProductCardState createState() => ProductCardState();

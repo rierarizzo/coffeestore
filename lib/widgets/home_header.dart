@@ -1,10 +1,16 @@
 import 'package:coffee_store/widgets/search_modal.dart';
 import 'package:flutter/material.dart';
 
+import '../models/product.dart';
 import 'filter_modal.dart';
 
 class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final TextEditingController iconController = TextEditingController();
+  // Tiene un parámetro updateProducts que va a representar la función para
+  // actualizar la lista de productos en el contexto de la pantalla principal.
+  late final Function(List<Product>) updateProducts;
+
+  // Se debe pasar la función en el constructor desde el home screen.
+  HomeHeaderDelegate({required this.updateProducts});
 
   @override
   Widget build(
@@ -78,7 +84,10 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                   showModalBottomSheet<void>(
                     context: context,
                     builder: (BuildContext context) {
-                      return const FilterModalBottomSheet();
+                      // Se pasa función para actualizar los productos al modal
+                      // del filtro de productos por categoría.
+                      return FilterModalBottomSheet(
+                          updateProducts: updateProducts);
                     },
                   );
                 },
