@@ -1,4 +1,5 @@
 import 'package:coffee_store/models/product.dart';
+import 'package:coffee_store/screens/profile_screen.dart';
 import 'package:coffee_store/services/product_service.dart';
 import 'package:coffee_store/widgets/home_header.dart';
 import 'package:coffee_store/widgets/product_card.dart';
@@ -59,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        body: CustomScrollView(
+        body: <Widget> [
+          CustomScrollView(
           slivers: [
             SliverPersistentHeader(
               pinned: true,
@@ -74,6 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
-        ));
+        ),
+         const ProfileScreen()
+        ][currentPageIndex]);
   }
 }

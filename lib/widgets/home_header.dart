@@ -63,6 +63,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
             actions: [
               IconButton(
                 icon: const Icon(Icons.search),
+                color: Colors.white,
                 onPressed: () {
                   showModalBottomSheet<void>(
                     context: context,
@@ -74,6 +75,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
               ),
               IconButton(
                 icon: const Icon(Icons.filter_alt),
+                color: Colors.white,
                 onPressed: () {
                   showModalBottomSheet<void>(
                     context: context,
