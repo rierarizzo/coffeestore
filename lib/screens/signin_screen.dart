@@ -3,6 +3,7 @@ import 'package:coffee_store/screens/signup_screen.dart';
 import 'package:coffee_store/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -18,68 +19,90 @@ class _SignInScreenState extends State<SignInScreen> {
   String _password = "";
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: Container(
-      margin: const EdgeInsets.fromLTRB(150, 10, 150, 10),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextFormField(
-              decoration:
-                  const InputDecoration(labelText: "Correo electrónico"),
-              keyboardType: TextInputType.emailAddress,
-              onSaved: (value) => _email = value!,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background.webp"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black
+                  .withOpacity(0.7), 
+              BlendMode
+                  .darken, 
             ),
-            TextFormField(
-              decoration: const InputDecoration(labelText: "Contraseña"),
-              obscureText: true,
-              onSaved: (value) => _password = value!,
-            ),
-            Container(
-              margin: const EdgeInsets.all(30),
-              child: CupertinoButton.filled(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    bool isLogged =
-                        await AuthService().signIn(_email, _password);
-                    if (!isLogged) {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Credenciales inválidas')),
-                        );
-                      }
-                      return;
-                    }
-                    if (context.mounted) {
+          ),
+        ),
+        child: Center(
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(150, 10, 150, 10),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(labelText: "Correo electrónico"),
+                    keyboardType: TextInputType.emailAddress,
+                    onSaved: (value) => _email = value!,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: "Contraseña"),
+                    obscureText: true,
+                    onSaved: (value) => _password = value!,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(30),
+                    child: CupertinoButton.filled(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          bool isLogged =
+                              await AuthService().signIn(_email, _password);
+                          if (!isLogged) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Credenciales inválidas')),
+                              );
+                            }
+                            return;
+                          }
+                          if (context.mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()),
+                            );
+                          }
+                        }
+                      },
+                      child: const Text("Ingresar"),
+                    ),
+                  ),
+                  CupertinoButton(
+                    onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomeScreen()),
+                            builder: (context) => const SignUpScreen()),
                       );
-                    }
-                  }
-                },
-                child: const Text("Ingresar"),
+                    },
+                    child: const Text("¿No tienes una cuenta? Regístrate"),
+                  )
+                ],
               ),
             ),
-            CupertinoButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignUpScreen()),
-                );
-              },
-              child: const Text("¿No tienes una cuenta? Regístrate"),
-            )
-          ],
+          ),
         ),
       ),
-    )));
+    );
   }
 }

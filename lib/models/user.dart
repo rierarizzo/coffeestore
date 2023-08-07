@@ -1,28 +1,29 @@
-import 'package:coffee_store/models/address.dart';
-import 'package:coffee_store/models/paymentcard.dart';
-
 class User {
-  int? id;
+  int id;
+  String completeName;
   String username;
-  String name;
-  String surname;
-  String? phoneNumber;
+  String phoneNumber;
   String email;
-  String password;
-  String roleCode;
-  List<Address>? addresses;
-  List<PaymentCard>? paymentCards;
+  String role;
 
   User({
-    this.id,
+    required this.id,
+    required this.completeName,
     required this.username,
-    required this.name,
-    required this.surname,
-    this.phoneNumber,
+    required this.phoneNumber,
     required this.email,
-    required this.password,
-    required this.roleCode,
-    this.addresses,
-    this.paymentCards,
+    required this.role,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      completeName: json['completeName'],
+      username: json['username'],
+      phoneNumber: json['phoneNumber'],
+      email: json['email'],
+      role: json['role'],
+    );
+  }
+
 }

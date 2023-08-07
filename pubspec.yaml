@@ -69,6 +69,14 @@ flutter:
     - assets/user.svg
     - assets/user_selected.svg
     - assets/coffee_bk.jpg
+    - assets/profile.svg
+    - assets/email.svg
+    - assets/telephone.svg
+    - assets/completeName.svg
+    - assets/close.svg
+    - assets/background.webp
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

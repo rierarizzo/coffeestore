@@ -5,6 +5,7 @@ import 'package:coffee_store/widgets/home_header.dart';
 import 'package:coffee_store/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,6 +24,7 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     fetchProducts();
+    
   }
 
   // Obtiene los productos desde el backend
@@ -88,7 +90,7 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-         const ProfileScreen()
+        ProfileScreen()
         ][currentPageIndex]);
   }
 }
