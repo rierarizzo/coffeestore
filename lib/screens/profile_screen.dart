@@ -1,3 +1,4 @@
+import 'package:coffee_store/screens/signin_screen.dart';
 import 'package:coffee_store/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -65,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    Expanded(child: buildUserDetails(snapshot.data!)),
+                    Expanded(child: buildUserDetails(context, snapshot.data!)),
                   ],
                 ),
               );
@@ -130,7 +131,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget stripe({String? texto, String? icon}) {
+  Widget stripe({
+    String? texto,
+    String? icon,
+  }) {
     return Expanded(
       child: Container(
         alignment: Alignment.centerLeft,
@@ -153,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  ListView buildUserDetails(User? user) {
+  ListView buildUserDetails(BuildContext context, User? user) {
     return ListView.builder(
       itemCount: 6,
       itemBuilder: (context, index) {
@@ -173,7 +177,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 item("Email", user!.email ?? '', "assets/email.svg"),
                 Row(
                   children: [
-                    stripe(texto: 'Cerrar Sesión', icon: 'assets/close.svg'),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignInScreen()),
+                          );
+                    
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.remove('accessToken');
+                        },
+                        child: stripe(
+                            texto: 'Cerrar Sesión', icon: 'assets/close.svg'),
+                      ),
+                    ),
                   ],
                 ),
               ],

@@ -32,10 +32,8 @@ class _SignInScreenState extends State<SignInScreen> {
             image: AssetImage("assets/background.webp"),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              Colors.black
-                  .withOpacity(0.7), 
-              BlendMode
-                  .darken, 
+              Colors.black.withOpacity(0.7),
+              BlendMode.darken,
             ),
           ),
         ),
@@ -48,13 +46,32 @@ class _SignInScreenState extends State<SignInScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextFormField(
-                    decoration:
-                        const InputDecoration(labelText: "Correo electrónico"),
+                    decoration: const InputDecoration(
+                      labelText: "Correo electrónico",
+                      labelStyle: TextStyle(
+                          color: Colors.white), // Color del texto del label
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors
+                                .white), // Color del borde cuando está enfocado
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
                     keyboardType: TextInputType.emailAddress,
                     onSaved: (value) => _email = value!,
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(labelText: "Contraseña"),
+                    decoration: const InputDecoration(
+                      labelText: "Contraseña",
+                      labelStyle: TextStyle(
+                          color: Colors.white), // Color del texto del label
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors
+                                .white), // Color del borde cuando está enfocado
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
                     obscureText: true,
                     onSaved: (value) => _password = value!,
                   ),
@@ -95,7 +112,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             builder: (context) => const SignUpScreen()),
                       );
                     },
-                    child: const Text("¿No tienes una cuenta? Regístrate"),
+                    child: const Text("¿No tienes una cuenta? Regístrate", style: TextStyle(color: Colors.white)),
                   )
                 ],
               ),
