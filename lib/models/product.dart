@@ -1,20 +1,20 @@
 class Product {
   int id;
   String name;
-  String description;
-  String imageURL;
+  String? description;
+  String? imageURL;
   double price;
-  String categoryCode;
-  int stock;
+  String? categoryCode;
+  int? stock;
 
   Product({
     required this.id,
     required this.name,
-    required this.description,
-    required this.imageURL,
+    this.description,
+    this.imageURL,
     required this.price,
-    required this.categoryCode,
-    required this.stock,
+    this.categoryCode,
+    this.stock,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -26,6 +26,13 @@ class Product {
         price: json["price"],
         categoryCode: json["categoryCode"],
         stock: json["stock"]);
+  }
+
+  factory Product.fromJson2(Map<String, dynamic> json) {
+    return Product(
+        id: json["id"],
+        name: json["name"],
+        price: json["price"]);
   }
 
   Map<String, dynamic> toJson() {

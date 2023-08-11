@@ -1,3 +1,4 @@
+import 'package:coffee_store/screens/shoppingcart_screen.dart';
 import 'package:coffee_store/widgets/search_modal.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
             duration: const Duration(milliseconds: 150),
             opacity: 1 - progress,
             child: Image.asset(
-              'assets/coffee_bk.jpg',
+              "assets/background.webp",
               fit: BoxFit.cover,
             ),
           ),
@@ -97,7 +98,16 @@ class HomeHeaderDelegate extends SliverPersistentHeaderDelegate {
                 },
               ),
               IconButton(
-                  icon: const Icon(Icons.shopping_cart), onPressed: () {})
+                icon: const Icon(Icons.shopping_cart),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ShoppingCartScreen()),
+                  );
+                },
+              )
             ],
             elevation: 0,
           ),

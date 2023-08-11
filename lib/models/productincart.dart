@@ -8,7 +8,8 @@ class ProductInCart {
 
   factory ProductInCart.fromJson(Map<String, dynamic> json) {
     return ProductInCart(
-        product: Product.fromJson(json["product"]), quantity: json["quantity"]);
+        product: Product.fromJson2(json["product"]),
+        quantity: json["quantity"]);
   }
 
   Map<String, dynamic> toJson() {

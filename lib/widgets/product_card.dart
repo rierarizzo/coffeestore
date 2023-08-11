@@ -60,7 +60,7 @@ class ProductCardState extends State<ProductCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Image.network(
-                    widget.product.imageURL,
+                    widget.product.imageURL!,
                     width: 150,
                     height: 150,
                     fit: BoxFit.cover,
@@ -86,7 +86,7 @@ class ProductCardState extends State<ProductCard> {
                           padding:
                               const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Text(
-                            widget.product.description,
+                            widget.product.description!,
                             style: const TextStyle(fontSize: 16),
                             textAlign: TextAlign.left,
                           ),
