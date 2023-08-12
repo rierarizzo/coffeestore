@@ -57,7 +57,8 @@ class ShoppingCartScreenState extends State<ShoppingCartScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const RegisterAddressScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const RegisterAddressScreen()),
                 );
               },
               child: const Icon(Icons.shop),

@@ -25,5 +25,4 @@ class User {
       role: json['role'],
     );
   }
-
 }

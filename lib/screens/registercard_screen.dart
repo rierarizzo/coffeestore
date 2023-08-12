@@ -72,7 +72,7 @@ class _RegisterCardScreenState extends State<RegisterCardScreen> {
                     ),
                     style: const TextStyle(color: Colors.white),
                     keyboardType: TextInputType.number,
-                    onSaved: (value) => _expYear = value! as int,
+                    onSaved: (value) => _expYear = int.parse(value!),
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -87,7 +87,7 @@ class _RegisterCardScreenState extends State<RegisterCardScreen> {
                     ),
                     style: const TextStyle(color: Colors.white),
                     keyboardType: TextInputType.number,
-                    onSaved: (value) => _expMonth = value! as int,
+                    onSaved: (value) => _expMonth = int.parse(value!),
                   ),
                   TextFormField(
                     decoration: const InputDecoration(

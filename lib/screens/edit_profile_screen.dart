@@ -1,7 +1,7 @@
 import 'package:coffee_store/services/user_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../models/user.dart';
 
@@ -189,7 +189,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         onPressed: () async {
           try {
             await UserService().updateProfile(widget.user);
-            Navigator.pop(currentContext,true);
+            Navigator.pop(currentContext, true);
 
             ScaffoldMessenger.of(currentContext).showSnackBar(
               SnackBar(

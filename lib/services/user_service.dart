@@ -38,7 +38,7 @@ class UserService {
     String accessToken = prefs.getString('accessToken') ?? '';
     String idUser = prefs.getString('idUser') ?? '';
 
-    final List<Map<String, dynamic>> addressList = [
+    final json = [
       {
         "type": "W",
         "provinceID": 1,
@@ -48,12 +48,17 @@ class UserService {
       }
     ];
 
+    final body = jsonEncode(json);
+
     final response = await client.post(
         Uri.parse("$uri/users/add-addresses/$idUser"),
-        headers: {'Authorization': accessToken},
-        body: addressList);
+        headers: {
+          'Authorization': accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: body);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 201) {
       return false;
     }
 
@@ -66,24 +71,29 @@ class UserService {
     String accessToken = prefs.getString('accessToken') ?? '';
     String idUser = prefs.getString('idUser') ?? '';
 
-    final json = {
-      "type": "C",
-      "company": 1,
-      "holderName": "Default",
-      "number": number,
-      "expirationYear": expirationYear,
-      "expirationMonth": expirationMonth,
-      "cvv": cvv,
-    };
+    final json = [
+      {
+        "type": "C",
+        "company": 1,
+        "holderName": "Default",
+        "number": number,
+        "expirationYear": expirationYear,
+        "expirationMonth": expirationMonth,
+        "cvv": cvv,
+      }
+    ];
 
     final body = jsonEncode(json);
 
     final response = await client.post(
         Uri.parse("$uri/users/add-cards/$idUser"),
-        headers: {'Authorization': accessToken},
-        body: [body]);
+        headers: {
+          'Authorization': accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: body);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 201) {
       return false;
     }
 

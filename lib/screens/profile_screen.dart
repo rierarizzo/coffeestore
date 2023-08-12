@@ -16,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late Future<User> userProfileFuture;
+
   @override
   void initState() {
     super.initState();
@@ -163,18 +164,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       itemBuilder: (context, index) {
         switch (index) {
           case 1:
-            return item("Nombre completo", user!.completeName ?? '',
-                "completeName.svg");
+            return item(
+                "Nombre completo", user!.completeName, "completeName.svg");
           case 2:
             return item(
-                "Nombre de usuario", user!.username ?? '', "completeName.svg");
+                "Nombre de usuario", user!.username, "completeName.svg");
           case 3:
-            return item("Número de teléfono", user!.phoneNumber ?? '',
+            return item("Número de teléfono", user!.phoneNumber,
                 "assets/telephone.svg");
           case 4:
             return Column(
               children: [
-                item("Email", user!.email ?? '', "assets/email.svg"),
+                item("Email", user!.email, "assets/email.svg"),
                 Row(
                   children: [
                     Expanded(
@@ -185,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             MaterialPageRoute(
                                 builder: (context) => const SignInScreen()),
                           );
-                    
+
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           prefs.remove('accessToken');

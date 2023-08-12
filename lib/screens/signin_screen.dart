@@ -3,7 +3,6 @@ import 'package:coffee_store/screens/signup_screen.dart';
 import 'package:coffee_store/services/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -112,7 +111,8 @@ class _SignInScreenState extends State<SignInScreen> {
                             builder: (context) => const SignUpScreen()),
                       );
                     },
-                    child: const Text("¿No tienes una cuenta? Regístrate", style: TextStyle(color: Colors.white)),
+                    child: const Text("¿No tienes una cuenta? Regístrate",
+                        style: TextStyle(color: Colors.white)),
                   )
                 ],
               ),

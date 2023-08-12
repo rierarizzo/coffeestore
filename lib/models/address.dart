@@ -1,5 +1,5 @@
 class Address {
-  int id;
+  int? id;
   String type;
   int provinceID;
   int cityID;
@@ -7,11 +7,21 @@ class Address {
   String detail;
 
   Address({
-    required this.id,
+    this.id,
     required this.type,
     required this.provinceID,
     required this.cityID,
     this.postalCode,
     required this.detail,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'type': type,
+      'provinceID': provinceID,
+      'cityID': cityID,
+      'postalCode': postalCode,
+      'detail': detail,
+    };
+  }
 }

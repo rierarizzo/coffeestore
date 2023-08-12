@@ -1,10 +1,8 @@
 import 'dart:convert';
+
 import 'package:http/http.dart';
 import 'package:loggy/loggy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../utils/generalresponse.dart';
-import '../utils/loginresponse.dart';
 
 class AuthService {
   final client = Client();
@@ -20,7 +18,6 @@ class AuthService {
 
     // Status OK
     if (response.statusCode == 200) {
-
       final responseJson = json.decode(response.body);
       String accessToken = responseJson['body']['accessToken'];
       String idUser = (responseJson['body']['user']['id']).toString();
@@ -29,7 +26,6 @@ class AuthService {
       prefs.setString('accessToken', accessToken);
       prefs.setString('idUser', idUser);
 
-      
       logDebug(response.body);
       return true;
     } else {
@@ -65,7 +61,7 @@ class AuthService {
     }
   }
 
-   Future<bool> hasToken() async {
+  Future<bool> hasToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.containsKey('accessToken');
   }
