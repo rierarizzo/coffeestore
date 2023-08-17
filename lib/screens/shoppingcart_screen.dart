@@ -40,6 +40,10 @@ class ShoppingCartScreenState extends State<ShoppingCartScreen> {
     });
   }
 
+  // Widget de lista de tarjetas de productos en el carrito de compras
+  // Usa listview para la lista
+  // FloactingActionButton para los botones flotantes (botón para regresar a la
+  // pantalla principal y botón para comprar)
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -23,6 +23,7 @@ class _RegisterCardScreenState extends State<RegisterCardScreen> {
     super.initState();
   }
 
+  // Widget que representa el formulario de registro de tarjeta de crédito/débito
   @override
   Widget build(BuildContext context) {
     return Scaffold(

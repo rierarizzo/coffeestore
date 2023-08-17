@@ -22,6 +22,7 @@ class _RegisterAddressScreenState extends State<RegisterAddressScreen> {
     super.initState();
   }
 
+  // Widget que representa el formulario para registrar la dirección del usuario.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

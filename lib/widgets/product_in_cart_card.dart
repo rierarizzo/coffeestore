@@ -17,10 +17,13 @@ class ProductInCartCard extends StatefulWidget {
 }
 
 class ProductInCartCardState extends State<ProductInCartCard> {
+  // Formato para moneda
   final oCcy = NumberFormat("#,##0.00", "en_US");
 
   int currentQuantity = 1;
 
+  // Este método sirve para obtener los productos agregados al carrito, se usa
+  // SharedPreferences para obtener todos los productos.
   static Future<List<ProductInCart>> getCart() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final cartData = prefs.getStringList(Constants.shoppingCartKey) ?? [];
@@ -29,6 +32,8 @@ class ProductInCartCardState extends State<ProductInCartCard> {
         .toList();
   }
 
+  // Widget que representa una tarjeta individual de un producto agregado al
+  // carrito de compras
   @override
   Widget build(BuildContext context) {
     return Card(
